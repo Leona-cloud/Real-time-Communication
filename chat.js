@@ -9,13 +9,14 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/chat.html');
   });
 
-  io.on('connection', (socket) => {
-    socket.on('chat message', (msg) => {
-      console.log('message: ' + msg);
+  io.on('connection', socket => {
+    socket.on('chat message', msg => {
+   socket.broadcast.emit('chat message', msg)// sends message to all users apart from the sender
+   //io.emit('chat message', msg) sends message to all users including the sender
     });
   });
 
-  //io.emit('messages', { someProperty: 'some value', otherProperty: 'other value' }); 
+  
 
 server.listen(3000, () => {
   console.log('listening on *:3000');
