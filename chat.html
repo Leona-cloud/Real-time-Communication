@@ -39,6 +39,7 @@
     </style>
 </head>
 <body>
+    <ul id="messages"></ul>
     <div id="message"></div>
     <form id="send">
         <input type="text" id="message1">
@@ -49,6 +50,7 @@
 <script>
     var socket = io();
 
+    var messages = document.getElementById('messages')
     var send = document.getElementById('send');
   var message1 = document.getElementById('message1');
 
@@ -59,5 +61,12 @@ send.addEventListener('submit', e=> {
     message1.value = '';
   }
 });
+
+socket.on('chat message', msg =>{
+    var item = document.createElement('li');
+    item.textContent = msg;
+    messages.appendChild(item);
+    window.scrollTo(0, document.body.scrollHeight);
+})
 </script>
 </html>
